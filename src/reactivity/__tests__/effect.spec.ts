@@ -12,6 +12,7 @@ describe('effect',()=>{
 
         expect(nextAge).toBe(11);
         //update操作
+        //测试依赖收集
         user.age++;
         expect(nextAge).toBe(12)
 

@@ -1,15 +1,19 @@
-export  function  reactive (raw) {
-    return new Proxy(raw,{
+import {track, trigger} from "./effect";
+
+export function reactive(raw) {
+    return new Proxy(raw, {
         get(target, key) {
-            const res = Reflect.get(target,key)
+            const res = Reflect.get(target, key)
             //TODO
-            // 依赖收集
-            return  res
+            // 依赖收集 done
+            track(target, key);
+            return res
         },
-        set(target,key,value) {
-            const  res =Reflect.set(target,key,value);
+        set(target, key, value) {
+            const res = Reflect.set(target, key, value);
             //TODO
-            // 触发依赖
+            // 触发依赖 done
+            trigger(target, key)
             return res
         }
     })
