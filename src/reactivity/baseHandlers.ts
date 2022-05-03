@@ -14,6 +14,8 @@ function createdGetter(isReadonly = false) {
 
         if (key === ReactiveFlags.IS_REACTIVE) {
             return !isReadonly
+        } else if (key === ReactiveFlags.IS_READONLY) {
+            return isReadonly
         }
         return res
     }
