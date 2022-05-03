@@ -1,5 +1,8 @@
 import {extend} from "../shared";
 
+let activeEffect;
+let shouldTrack;
+
 class ReactiveEffect {
     deps = [];
     active = true;
@@ -11,8 +14,16 @@ class ReactiveEffect {
     }
 
     run() {
+        if (!this.active) {
+            this._fn();
+        }
         activeEffect = this;
-        this._fn();
+        shouldTrack = true;
+        // 1.当同时出发get and set操作的时候， 需要判断是否有需要触发track，通过开关参数进行控制。
+        let result = this._fn();
+        shouldTrack = false;
+        return result
+
     }
 
     stop() {
@@ -33,12 +44,14 @@ function cleanupEffect(effect) {
     effect.deps.forEach((dep: any) => {
         dep.delete(effect);
     })
+    effect.deps.length = 0;
 }
 
 
 const targetMap = new Map();
 
 export function track(target, key) {
+    if (!istracking()) return;
     // 收集effect
     let depsMap = targetMap.get(target);
 
@@ -54,9 +67,13 @@ export function track(target, key) {
         depsMap.set(key, dep)
     }
     // let  dep  = new Set();
-    if (!activeEffect) return;
+
     dep.add(activeEffect);
     activeEffect.deps.push(dep)
+}
+
+function istracking() {
+    return shouldTrack && activeEffect !== undefined;
 }
 
 export function trigger(target, key) {
@@ -71,8 +88,6 @@ export function trigger(target, key) {
     }
 }
 
-
-let activeEffect;
 
 export function effect(fn, options: any = {}) {
     const _effect = new ReactiveEffect(fn, options.scheduler)
