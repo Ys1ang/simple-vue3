@@ -1,4 +1,3 @@
-// @ts-ignore
 export const extend = Object.assign;
 
 export const isObject = val => {
