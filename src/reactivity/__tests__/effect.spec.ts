@@ -55,6 +55,8 @@ describe('effect', () => {
         stop(runner)
         // obj.prop = 3
         obj.prop++;
+        //obj.prop = obj.prop+1;
+        //get & set触发后需要判断是否需要依赖收集
         expect(dummy).toBe(2)
         // stopped effect should still be manually callable
         runner()
