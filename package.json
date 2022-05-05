@@ -2,10 +2,11 @@
   "name": "simple-vue3",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/simple.cjs.js",
+  "main": "lib/simple-vue.cjs.js",
+  "esmain": "lib/simple-vue.esm.js",
   "scripts": {
     "test": "jest",
-    "build": "rollup -c"
+    "build": "rollup -c  rollup.config.js  -w"
   },
   "repository": {
     "type": "git",

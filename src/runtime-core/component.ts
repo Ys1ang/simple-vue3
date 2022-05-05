@@ -6,10 +6,10 @@ export function createComponentInstance(vnode: any) {
 
 function finishComponentSetup(instance) {
     const Component = instance.type;
-
-    if (Component.render) {
-        instance.render = Component.render;
-    }
+    instance.render = Component.render;
+    // if (Component.render) {
+    //
+    // }
 }
 
 function handleSetupResult(instance, setupResult: any) {

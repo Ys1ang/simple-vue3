@@ -1,4 +1,3 @@
-export function init(){
-    return 1213;
-}
+// 出口文件
 
+export * from './runtime-core'
