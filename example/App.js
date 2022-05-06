@@ -1,4 +1,5 @@
 import {h} from "../lib/simple-vue.esm.js";
+import {Foo} from "./foo.js";
 
 window.self = null;
 
@@ -18,9 +19,22 @@ export const App = {
 
         return h('div', {
                 id: 'root',
-                class: ["red", "hard"]
+                class: ["red hard"],
+                //on+event
+                onClick() {
+                    console.log('click')
+                },
+                onMousedown() {
+                    console.log('click')
+                }
             },
-            'hi ' + this.msg
+            [
+                h('div', {}, 'hi,' + this.msg),
+                h(Foo, {count: 1}, 'hi,' + this.count),
+            ]
+
+
+            // 'hi ' + this.msg
             // [
             //     h('p', {class: 'blue'}, [
             //         h('p', {class: 'blue'}, 'asd'),
