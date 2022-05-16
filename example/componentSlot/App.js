@@ -1,4 +1,4 @@
-import {h} from "../../lib/simple-vue.esm.js";
+import {h, createTextVNode} from "../../lib/simple-vue.esm.js";
 import {Foo} from "./foo.js";
 
 window.self = null;
@@ -14,7 +14,8 @@ export const App = {
       // 对象化
         const foo = h(Foo,{},{
             header:({age})=>{
-              return    h('p',{},'header'+age)
+              return   [ h('p',{},'header'+age),createTextVNode('JOJO')]
+
             },
             footer:()=>h('p',{},'footer')
         });

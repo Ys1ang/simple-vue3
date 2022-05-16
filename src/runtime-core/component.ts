@@ -33,8 +33,8 @@ function setupStateFulComponent(instance: any) {
     const {setup} = Component;
 
     if (setup) {
+        currentInstance  =  instance;
         const setupResult = setup(shallowReadonly(instance.props),{emit:instance.emit});
-
         handleSetupResult(instance, setupResult)
     }
 }
@@ -44,4 +44,8 @@ export function setupComponent(instance: any) {
     initSlots(instance,instance.vnode.children);
     setupStateFulComponent(instance);
 
+}
+let currentInstance = null;
+export function  getCurrentInstance(){
+    return currentInstance
 }
