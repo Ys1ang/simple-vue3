@@ -2,9 +2,10 @@ import {PublicInstanceProxyHandlers} from "./componentPublicInstance";
 import {initProps} from "./componentProps";
 import {shallowReadonly} from "../reactivity/reactive";
 import {emit} from "./componentEmit";
+import {initSlots} from "./componentSlots";
 
 export function createComponentInstance(vnode: any) {
-    const component = {vnode, type: vnode.type, setupState: {}, props: {},emit:()=>{}};
+    const component = {vnode, type: vnode.type, setupState: {}, props: {},emit:()=>{},slots:()=>{}};
     component.emit = emit.bind(null,component) as any
     return component;
 }
@@ -38,10 +39,9 @@ function setupStateFulComponent(instance: any) {
     }
 }
 
-
 export function setupComponent(instance: any) {
     initProps(instance, instance.vnode.props);
-    // initslots();
+    initSlots(instance,instance.vnode.children);
     setupStateFulComponent(instance);
 
 }
