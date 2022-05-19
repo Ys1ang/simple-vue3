@@ -2,36 +2,41 @@ import { Fragment,Text} from "./vNode";
 import {createComponentInstance, setupComponent} from "./component";
 import {ShapeFlags} from "../shared/ShapeFlags";
 import { createAppAPI} from "./createApp";
+import {effect} from "../reactivity/effect";
 
 export  function createRender(options){
     const  {createElement,patchProps,insert}=options;
      function render(vnode, container,parentComponent=null) {
-        patch(vnode, container,parentComponent)
+        patch(null,vnode, container,parentComponent)
     }
-    function patch(vnode, container,parentComponent) {
+    //n1:old Vnode
+    //n2:new Vnode
+    function patch(n1,n2, container,parentComponent) {
         //处理组件 || 处理element
         //type === strinng => string
         //type === object => element
-        const {shapeFlag,type} = vnode;
+
+        const  {type, shapeFlag} = n2;
+
         switch (type){
             case Fragment:
-                processFragment(vnode,container,parentComponent);
+                processFragment(n1,n2,container,parentComponent);
                 break
             case Text:
-                processText(vnode,container);
+                processText(n1,n2,container);
                 break
             default:
                 if (shapeFlag & ShapeFlags.ELEMENT) {
-                    processElement(vnode, container,parentComponent)
+                    processElement(n1,n2, container,parentComponent)
                 } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
-                    processComponent(vnode, container,parentComponent)
+                    processComponent(n1,n2, container,parentComponent)
                 }
         }
     }
 
 
-function processText(vnode, container) {
-    const {children} = vnode;
+function processText(n1,n2, container) {
+    const {children} = n2;
     const  textNode = document.createTextNode(children);
     console.log('processText')
     container.append(textNode);
@@ -39,10 +44,32 @@ function processText(vnode, container) {
 
 
 function setupRenderEffect(instance: any, initVnode, container) {
-    const {proxy} = instance;
-    const subTree = instance.render.call(proxy);
-    patch(subTree, container,instance)
-    initVnode.el = subTree.el
+  effect(()=>{
+
+      if(!instance.isMounted){
+          const {proxy} = instance;
+          const subTree =  (instance.sunTree = instance.render.call(proxy));
+          patch(null,subTree, container,instance)
+          initVnode.el = subTree.el;
+          instance.isMounted = true;
+      }else{
+          console.log('update');
+          const {proxy} = instance;
+          const subTree = instance.render.call(proxy);
+
+          const prevSubTree = instance.sunTree;
+          instance.subTree =  subTree;
+          patch(prevSubTree,subTree, container,instance)
+
+          //
+          // console.log('subTree')
+          // console.log(subTree)
+          // console.log('prevSubTree')
+          // console.log(prevSubTree)
+
+      }
+
+  })
 }
 
 function mountComponent(initVnode: any, container: any,parentComponent:any) {
@@ -51,13 +78,13 @@ function mountComponent(initVnode: any, container: any,parentComponent:any) {
     setupRenderEffect(instance, initVnode, container);
 }
 
-function processComponent(vnode: any, container: any,parentComponent) {
-    mountComponent(vnode, container,parentComponent)
+function processComponent(n1,n2: any, container: any,parentComponent) {
+    mountComponent(n2, container,parentComponent)
 }
 
 function mountChildren(vnode, el,parentComponent) {
     vnode.children.forEach(v => {
-        patch(v, el,parentComponent)
+        patch(null,v, el,parentComponent)
     })
 }
 
@@ -77,12 +104,24 @@ function mountElement(vnode: any, container: any,parentComponent) {
     insert(el,container)
 }
 
-function processElement(vnode: any, container: any,parentComponent) {
-    mountElement(vnode, container,parentComponent)
+function processElement(n1,n2, container: any,parentComponent) {
+
+    if(!n1){
+        mountElement(n2,container,parentComponent)
+    }else{
+        patchElement(n1,n2,container)
+    }
 }
 
-function processFragment(vnode: any, container: any,parentComponent) {
-    mountChildren(vnode,container,parentComponent)
+function patchElement(n1,n2,container) {
+    console.log('pathEle')
+    console.log(n1)
+    console.log(n2)
+    //dff算法更新props children
+}
+
+function processFragment(n1,n2: any, container: any,parentComponent) {
+    mountChildren(n2,container,parentComponent)
 }
 
 
