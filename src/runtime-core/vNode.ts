@@ -13,7 +13,8 @@ export function createVNode(type, props?, children?) {
         props,
         children,
         shapeFlag: getShapeFlag(type),
-        el: null
+        el: null,
+        key: props && props.key
     }
 
 
@@ -22,8 +23,8 @@ export function createVNode(type, props?, children?) {
     } else if (Array.isArray(children)) {
         vnode.shapeFlag = vnode.shapeFlag | ShapeFlags.ARRAY_CHILDREN;
     }
-    if(vnode.shapeFlag & ShapeFlags.STATEFUL_COMPONENT){
-        if(typeof children === 'object'){
+    if (vnode.shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
+        if (typeof children === 'object') {
             vnode.shapeFlag = vnode.shapeFlag | ShapeFlags.SLOT_CHILDREN;
         }
     }
@@ -32,8 +33,8 @@ export function createVNode(type, props?, children?) {
     return vnode
 }
 
-export  function   createTextVNode(text){
+export function createTextVNode(text) {
     console.log(text)
     console.log(Text)
-    return createVNode(Text,{},text)
+    return createVNode(Text, {}, text)
 }

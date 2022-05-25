@@ -2,32 +2,33 @@
 //
 import {createRender} from "../../lib/simple-vue.esm.js";
 import {App} from './App.js'
-console.log('pixi',PIXI)
+
+console.log('pixi', PIXI)
 
 const game = new PIXI.Application({
-    width:500,
-    height:500
+    width: 500,
+    height: 500
 })
 
 document.body.append(game.view)
 
 
-const  renderer = createRender({
-    createElement(type){
-        if(type ==='rect'){
+const renderer = createRender({
+    createElement(type) {
+        if (type === 'rect') {
             const rect = new PIXI.Graphics();
             rect.beginFill(0xff0000);
-            rect.drawRect(0,0,100,100);
+            rect.drawRect(0, 0, 100, 100);
             rect.endFill();
 
             return rect
 
         }
     },
-    patchProps(el,key,val){
+    patchProps(el, key, val) {
         el[key] = val;
     },
-    insert(el,parent){
+    insert(el, parent) {
         parent.addChild(el);
     }
 })

@@ -1,7 +1,7 @@
 import {createVNode} from "./vNode";
 
 
-export function  createAppAPI(render){
+export function createAppAPI(render) {
     return function createApp(rootCpt) {
         return {
             mount(rootContainer) {

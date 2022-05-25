@@ -1,15 +1,15 @@
-import {createTextVNode, h, renderSlots} from "../../lib/simple-vue.esm.js";
+import {h, renderSlots} from "../../lib/simple-vue.esm.js";
 
 export const Foo = {
     setup(props) {
-     return{}
+        return {}
     },
     render() {
-        const foo = h('p',{},'foo');
+        const foo = h('p', {}, 'foo');
 
         console.log(foo)
-        return h('div', {}, [renderSlots(this.$slots,'header',{age:100}),
+        return h('div', {}, [renderSlots(this.$slots, 'header', {age: 100}),
             foo,
-            renderSlots(this.$slots,'footer')]);
+            renderSlots(this.$slots, 'footer')]);
     }
 }

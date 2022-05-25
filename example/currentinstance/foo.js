@@ -1,17 +1,17 @@
-import {createTextVNode, h, renderSlots,getCurrentInstance} from "../../lib/simple-vue.esm.js";
+import {getCurrentInstance, h} from "../../lib/simple-vue.esm.js";
 
 export const Foo = {
     setup(props) {
 
         const instance = getCurrentInstance()
-        console.log('foo',instance)
-     return{}
+        console.log('foo', instance)
+        return {}
     },
     render() {
-        const foo = h('p',{},'foo');
+        const foo = h('p', {}, 'foo');
 
         return h('div', {}, [
             foo
-            ]);
+        ]);
     }
 }

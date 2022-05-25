@@ -1,4 +1,4 @@
-import {istracking, track, trackEffects, triggerEffects} from "./effect";
+import {istracking, trackEffects, triggerEffects} from "./effect";
 import {hasChanged, isObject} from "../shared";
 import {reactive} from "./reactive";
 

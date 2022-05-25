@@ -1,5 +1,5 @@
-export function  emit(instance,event,...args){
-    console.log('emit',event);
+export function emit(instance, event, ...args) {
+    console.log('emit', event);
     const {props} = instance;
 
     //TPP
@@ -8,24 +8,23 @@ export function  emit(instance,event,...args){
     // handler&& handler();
 
 
-    const camelize = str =>{
-       return   str.replace(/-(\w)/g,(_,c)=>{
+    const camelize = str => {
+        return str.replace(/-(\w)/g, (_, c) => {
             return c ? c.toUpperCase() : ''
         })
     }
 
 
-    const capitalize = str=>{
+    const capitalize = str => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
-    const  toHandlerKey = str=>{
-        return str ? "on"+ capitalize(str): '';
+    const toHandlerKey = str => {
+        return str ? "on" + capitalize(str) : '';
     }
-
 
 
     const hanlerName = toHandlerKey(camelize(event));
     const handler = props[hanlerName];
-    handler&& handler(...args);
+    handler && handler(...args);
 
 }

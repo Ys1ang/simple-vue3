@@ -4,15 +4,15 @@ import {Foo} from "./foo.js";
 window.self = null;
 
 export const App = {
-    name:'App',
+    name: 'App',
     render() {
-        return h("div",{},[h("div",{},'App'),h(Foo,{
-            onAdd(a,b){
-            console.log('onAdd')
-            console.log('a',a)
-            console.log('b',b)
+        return h("div", {}, [h("div", {}, 'App'), h(Foo, {
+            onAdd(a, b) {
+                console.log('onAdd')
+                console.log('a', a)
+                console.log('b', b)
             },
-            onAddFoo(){
+            onAddFoo() {
                 console.log('AddFoo')
             }
         })])

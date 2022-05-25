@@ -5,19 +5,21 @@ import {emit} from "./componentEmit";
 import {initSlots} from "./componentSlots";
 import {proxyRefs} from "../reactivity";
 
-export function createComponentInstance(vnode: any,parent) {
-    console.log('parent',parent)
+export function createComponentInstance(vnode: any, parent) {
+    console.log('parent', parent)
     const component = {
         vnode,
         type: vnode.type,
         setupState: {},
         props: {},
-        emit:()=>{},
-        slots:()=>{},
-        provides:parent?parent.provides : {},
+        emit: () => {
+        },
+        slots: () => {
+        },
+        provides: parent ? parent.provides : {},
         parent
     };
-    component.emit = emit.bind(null,component) as any
+    component.emit = emit.bind(null, component) as any
     return component;
 }
 
@@ -44,19 +46,21 @@ function setupStateFulComponent(instance: any) {
     const {setup} = Component;
 
     if (setup) {
-        currentInstance  =  instance;
-        const setupResult = setup(shallowReadonly(instance.props),{emit:instance.emit});
+        currentInstance = instance;
+        const setupResult = setup(shallowReadonly(instance.props), {emit: instance.emit});
         handleSetupResult(instance, setupResult)
     }
 }
 
 export function setupComponent(instance: any) {
     initProps(instance, instance.vnode.props);
-    initSlots(instance,instance.vnode.children);
+    initSlots(instance, instance.vnode.children);
     setupStateFulComponent(instance);
 
 }
+
 let currentInstance = null;
-export function  getCurrentInstance(){
+
+export function getCurrentInstance() {
     return currentInstance
 }

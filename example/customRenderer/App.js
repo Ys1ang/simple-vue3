@@ -1,16 +1,16 @@
 import {h} from "../../lib/simple-vue.esm.js";
 
 export const App = {
-    setup(){
+    setup() {
         return {
-            x:100,
-            y:100,
+            x: 100,
+            y: 100,
         }
     },
-    render(){
-        return h('rect',{
-            x:this.x,
-            y:this.y,
+    render() {
+        return h('rect', {
+            x: this.x,
+            y: this.y,
         })
     }
 }

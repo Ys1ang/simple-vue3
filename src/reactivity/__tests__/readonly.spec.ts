@@ -1,5 +1,3 @@
-
-
 import {isProxy, isReadonly, readonly} from "../reactive";
 
 

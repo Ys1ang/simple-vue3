@@ -1,4 +1,4 @@
-import {isProxy, isReadonly, reactive, readonly} from "../reactive";
+import {reactive, readonly} from "../reactive";
 import {isRef, proxyRefs, ref, unRef} from "../ref";
 import {effect} from "../effect";
 
