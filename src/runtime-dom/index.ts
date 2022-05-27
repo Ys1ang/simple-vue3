@@ -24,8 +24,16 @@ function patchProps(el, key, prevVal, nextVal) {
 }
 
 
-function insert(el, container, anchor) {
-    container.insertBefore(el, anchor || null)
+// function insert(el, container, anchor) {
+//     container.insertBefore(el, anchor || null)
+// }
+
+function insert(child, parent, anchor = null) {
+    console.log("Insert");
+    console.log(child,);
+    console.log(parent);
+    console.log(anchor);
+    parent.insertBefore(child, anchor);
 }
 
 
