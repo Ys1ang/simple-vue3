@@ -1,4 +1,12 @@
-export enum NodeTypes {
+export const enum NodeTypes {
+    TEXT,
+    ROOT,
     INTERPOLATION,
-    SIMPLE_EXPRESSION
+    SIMPLE_EXPRESSION,
+    ELEMENT,
+    COMPOUND_EXPRESSION
+}
+
+export const enum ElementTypes {
+    ELEMENT,
 }
